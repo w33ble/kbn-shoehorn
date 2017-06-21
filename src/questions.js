@@ -1,21 +1,24 @@
 const { resolve } = require('path');
-const { readFileSync } = require('fs');
 const inquirer = require('inquirer');
+const { readJson } = require('./json_file');
+
+const defaultKibanaPath = () => process.cwd();
+
+function validKibanaPath(kibanaPath) {
+  try {
+    return readJson(`${kibanaPath}/package.json`).name === 'kibana';
+  } catch (e) {
+    return false;
+  }
+}
 
 exports.values = [
   {
     name: 'kibanaPath',
     message: 'Kibana path (relative path is ok):',
-    default: () => resolve(__dirname, '..', '..', 'kibana'),
     filter: str => resolve(__dirname, '..', str),
-    validate: (kibanaPath) => {
-      try {
-        const pkg = JSON.parse(readFileSync(`${kibanaPath}/package.json`));
-        return pkg.name === 'kibana';
-      } catch (e) {
-        return false;
-      }
-    },
+    when: () => !validKibanaPath(defaultKibanaPath()),
+    validate: validKibanaPath,
   },
   {
     name: 'url',
@@ -41,4 +44,5 @@ exports.values = [
   },
 ];
 
-exports.prompt = () => inquirer.prompt(exports.values);
+exports.prompt = () => inquirer.prompt(exports.values)
+.then(ans => Object.assign({ kibanaPath: defaultKibanaPath() }, ans));
