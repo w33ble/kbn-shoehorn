@@ -1,0 +1,32 @@
+{
+  "name": "kbn-shoehorn",
+  "version": "0.0.0",
+  "description": "Kibana plugin shoehorn tool",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint *.js src/**/*.js",
+    "start": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/w33ble/kbn-shoehorn.git"
+  },
+  "keywords": [],
+  "author": "Joe Fleming (https://github.com/w33ble)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/w33ble/kbn-shoehorn/issues"
+  },
+  "homepage": "https://github.com/w33ble/kbn-shoehorn",
+  "dependencies": {
+    "download-git-repo": "^1.0.1",
+    "inquirer": "^3.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^5.0.1",
+    "eslint-plugin-react": "^7.0.1"
+  }
+}
