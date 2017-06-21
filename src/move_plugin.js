@@ -6,4 +6,5 @@ module.exports = (targetPath) => {
   const pluginPkg = readJson(`${targetPath}/package.json`);
   const newPath = join(targetPath, '..', pluginPkg.name);
   renameSync(targetPath, newPath);
+  return { targetPath: newPath, name: pluginPkg.name };
 };

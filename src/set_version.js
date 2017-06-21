@@ -11,4 +11,6 @@ module.exports = (targetPath, kibanaPath) => {
   }
 
   writeJson(`${targetPath}/package.json`, pluginPkg);
+
+  return { version: kibanaPkg.version };
 };

@@ -14,8 +14,8 @@ questions.prompt()
   return download.repo(props.url, props.branch, props.targetPath)
   .then(() => {
     if (props.setVersion) setVersion(props.targetPath, props.kibanaPath);
-    if (props.setPath) movePlugin(props.targetPath);
+    return (props.setPath) ? movePlugin(props.targetPath).targetPath : props.targetPath;
   })
-  .then(() => console.log('Plugin installed!'));
+  .then(targetPath => console.log(`Plugin installed: ${targetPath}`));
 })
 .catch(err => console.error('FAILED:', err));
