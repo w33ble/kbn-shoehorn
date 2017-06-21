@@ -1,3 +1,6 @@
-const info = require('./info');
+const questions = require('./questions');
 
-info();
+questions.prompt()
+.then((answers) => {
+  console.log(answers);
+});
