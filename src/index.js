@@ -1,6 +1,15 @@
+/* eslint no-console: 0 */
 const questions = require('./questions');
+const download = require('./download');
 
 questions.prompt()
 .then((answers) => {
-  console.log(answers);
-});
+  // get dirname from the last part of the url name
+  const props = Object.assign({
+    targetPath: `${answers.kibanaPath}/plugins/${answers.url.split('/').reverse()[0]}`,
+  }, answers);
+
+  return download.repo(props.url, props.branch, props.targetPath)
+  .then(() => console.log('Plugin installed!'));
+})
+.catch(err => console.error('FAILED:', err));
