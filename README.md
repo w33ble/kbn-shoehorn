@@ -17,6 +17,8 @@ yarn add -g kbn-shoehorn
 
 Simply run `kbn-shoehorn` from the root of your Kibana path, and follow the prompts.
 
+You can optionally pass the username/repo as the first argument as well.
+
 ![kbn-shoehorn usage](http://i.imgur.com/pAegdtw.png)
 
 ## Why?
