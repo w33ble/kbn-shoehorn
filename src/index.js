@@ -3,6 +3,7 @@ const questions = require('./questions');
 const download = require('./download');
 const setVersion = require('./set_version');
 const movePlugin = require('./move_plugin');
+const depInstall = require('./dep_install');
 
 questions.prompt()
 .then((answers) => {
@@ -16,6 +17,9 @@ questions.prompt()
     if (props.setVersion) setVersion(props.targetPath, props.kibanaPath);
     return (props.setPath) ? movePlugin(props.targetPath).targetPath : props.targetPath;
   })
-  .then(targetPath => console.log(`Plugin installed: ${targetPath}`));
+  .then((targetPath) => {
+    depInstall(targetPath);
+    console.log(`Plugin installed: ${targetPath}`);
+  });
 })
 .catch(err => console.error('FAILED:', err));
