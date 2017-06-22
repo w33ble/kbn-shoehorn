@@ -3,6 +3,7 @@ const inquirer = require('inquirer');
 const { readJson } = require('./json_file');
 
 const defaultKibanaPath = () => process.cwd();
+const pluginName = () => process.argv[2];
 
 function validKibanaPath(kibanaPath) {
   try {
@@ -10,6 +11,10 @@ function validKibanaPath(kibanaPath) {
   } catch (e) {
     return false;
   }
+}
+
+function validPluginRepo(str) {
+  return /^(\bbitbucket:|\bgitlab:)?[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+/.test(str);
 }
 
 exports.values = [
@@ -23,7 +28,8 @@ exports.values = [
   {
     name: 'url',
     message: 'The plugin username/repo:',
-    validate: str => /^(\bbitbucket:|\bgitlab:)?[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+/.test(str),
+    when: () => !validPluginRepo(pluginName()),
+    validate: validPluginRepo,
   },
   {
     name: 'branch',
@@ -45,4 +51,7 @@ exports.values = [
 ];
 
 exports.prompt = () => inquirer.prompt(exports.values)
-.then(ans => Object.assign({ kibanaPath: defaultKibanaPath() }, ans));
+.then(ans => Object.assign({
+  kibanaPath: defaultKibanaPath(),
+  url: pluginName(),
+}, ans));
