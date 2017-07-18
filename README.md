@@ -33,7 +33,7 @@ That's a lot of manual steps just to author and to use a plugin. We can do bette
 
 ## Installing from repo
 
-`kbn-shoehorn` can use a git repo's username/repo path directly, and will download directly the plugin from the repo and place it in the Kibana plugins path. See the [download-git-repo](https://github.com/flipxfx/download-git-repo#examples) docs for options other than github.
+`kbn-shoehorn` can use a git repo's username/repo path. It will download the plugin directly from the repo and place it in the Kibana plugins path. See the [download-git-repo](https://github.com/flipxfx/download-git-repo#examples) docs for options other than github.
 
 ## Versioning
 
