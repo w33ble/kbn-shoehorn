@@ -12,7 +12,7 @@ Install `kbn-shoehorn` globally and use it to install plugins from the kibana pa
 ```
 npm install -g kbn-shoehorn
 # or with yarn
-yarn add -g kbn-shoehorn
+yarn global add kbn-shoehorn
 ```
 
 Simply run `kbn-shoehorn` from the root of your Kibana path, and follow the prompts.
