@@ -23,7 +23,8 @@
   "homepage": "https://github.com/w33ble/kbn-shoehorn",
   "dependencies": {
     "download-git-repo": "^1.0.1",
-    "inquirer": "^3.1.1"
+    "inquirer": "^3.1.1",
+    "minimist": "^1.2.0"
   },
   "devDependencies": {
     "eslint": "^3.19.0",
