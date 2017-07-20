@@ -41,7 +41,7 @@ exports.values = [
     name: 'branch',
     message: 'Repo branch:',
     default: 'master',
-    when: () => !nonInteractive(),
+    when: () => !argv.branch && !nonInteractive(),
   },
   {
     name: 'setVersion',
