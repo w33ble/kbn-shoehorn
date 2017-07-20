@@ -17,9 +17,29 @@ yarn global add kbn-shoehorn
 
 Simply run `kbn-shoehorn` from the root of your Kibana path, and follow the prompts.
 
-You can optionally pass the username/repo as the first argument as well.
-
 ![kbn-shoehorn usage](http://i.imgur.com/pAegdtw.png)
+
+### Specify the plugin inline
+
+You can optionally pass the username/repo as the first argument as well to skip the first question:
+
+```
+kbn-shoehorn snuids/Elastic-5.0-Country-Map-Visualizer
+```
+
+### Non Interactive Options
+
+If you prefer to script plugin installation, or just not deal with the questions at all, you can can mix the inlining of the username/repo argument with the `-y` flag, which will assume defaults for all other questions.
+
+```
+kbn-shoehorn snuids/Elastic-5.0-Country-Map-Visualizer -y
+```
+
+By default, this will pull from the `master` branch of the repo. If you still need to specify a specific branch, you can do so using the `--branch` option.
+
+```
+kbn-shoehorn snuids/Elastic-5.0-Country-Map-Visualizer -y --branch=v5.1
+```
 
 ## Why?
 
