@@ -23,6 +23,10 @@ function nonInteractive() {
   return Boolean(argv.y);
 }
 
+function loadFromFile() {
+  return argv.f && (typeof argv.f !== 'boolean') && argv.f.length;
+}
+
 exports.values = [
   {
     name: 'kibanaPath',
@@ -34,14 +38,14 @@ exports.values = [
   {
     name: 'url',
     message: 'The plugin username/repo:',
-    when: () => !validPluginRepo(pluginName()),
+    when: () => !loadFromFile() && !validPluginRepo(pluginName()),
     validate: validPluginRepo,
   },
   {
     name: 'branch',
     message: 'Repo branch:',
     default: 'master',
-    when: () => !argv.branch && !nonInteractive(),
+    when: () => !loadFromFile() && !argv.branch && !nonInteractive(),
   },
   {
     name: 'setVersion',
@@ -64,6 +68,7 @@ exports.prompt = () => inquirer.prompt(exports.values)
   kibanaPath: defaultKibanaPath(),
   url: pluginName(),
   branch: argv.branch || 'master',
+  filePath: argv.f,
   setVersion: true,
   setPath: true,
 }, ans));
