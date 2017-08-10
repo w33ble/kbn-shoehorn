@@ -1,6 +1,8 @@
 const { statSync } = require('fs');
 const { parse, join } = require('path');
 const ncp = require('ncp').ncp;
+const tempDir = require('temp-dir');
+const extract = require('extract-zip');
 const { readJson } = require('./json_file');
 
 function copyPath(filePath, targetPath) {
@@ -22,19 +24,29 @@ function copyPath(filePath, targetPath) {
   });
 }
 
+function unpackZip(filePath, targetPath) {
+  return new Promise((resolve, reject) => {
+    const { ext, name } = parse(filePath);
+    const unpackTarget = join(tempDir, name);
+
+    if (ext !== '.zip') {
+      reject(`Plugin must be a .zip file, ${ext} is not supported`);
+      return;
+    }
+
+    extract(filePath, { dir: unpackTarget }, (err) => {
+      if (err) reject(err);
+      else resolve(copyPath(unpackTarget, targetPath));
+    });
+  });
+}
+
 module.exports = function loadFile(filePath, targetPath) {
   return new Promise((resolve, reject) => {
     try {
       const stat = statSync(filePath);
       if (stat.isFile()) {
-        const { ext } = parse(filePath);
-
-        if (ext !== '.zip') {
-          reject(`Plugin must be a .zip file, ${ext} is not supported`);
-          return;
-        }
-
-        reject('Sorry, unpacking zip files is not currently supported');
+        resolve(unpackZip(filePath, targetPath));
       } else if (stat.isDirectory()) {
         resolve(copyPath(filePath, targetPath));
       } else {
