@@ -24,7 +24,8 @@
   "dependencies": {
     "download-git-repo": "^1.0.1",
     "inquirer": "^3.2.0",
-    "minimist": "^1.2.0"
+    "minimist": "^1.2.0",
+    "ncp": "^2.0.0"
   },
   "devDependencies": {
     "eslint": "^3.19.0",
