@@ -21,10 +21,18 @@ Simply run `kbn-shoehorn` from the root of your Kibana path, and follow the prom
 
 ### Specify the plugin inline
 
-You can optionally pass the username/repo as the first argument as well to skip the first question:
+You can optionally pass the username/repo as the first argument as well to skip the first question.
 
 ```
 kbn-shoehorn snuids/Elastic-5.0-Country-Map-Visualizer
+```
+
+### Load plugin from local path
+
+If you need to install a plugin from your machine, you can use the `-f` flag, passing it the path to the plugin. Currently only directories are supported.
+
+```
+kbn-shoehorn -f ~/Download/enhanced_tilemap/
 ```
 
 ### Non Interactive Options
