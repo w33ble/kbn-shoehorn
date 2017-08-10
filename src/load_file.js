@@ -36,7 +36,7 @@ module.exports = function loadFile(filePath, targetPath) {
 
         reject('Sorry, unpacking zip files is not currently supported');
       } else if (stat.isDirectory()) {
-        copyPath(filePath, targetPath).then(resolve).catch(reject);
+        resolve(copyPath(filePath, targetPath));
       } else {
         reject(`Path must be a file or directory: ${filePath}`);
       }
