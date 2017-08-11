@@ -2,7 +2,7 @@ const { statSync, readdirSync } = require('fs');
 const { parse, join } = require('path');
 const ncp = require('ncp').ncp;
 const tempDir = require('temp-dir');
-const extract = require('extract-zip');
+const extract = require('@w33ble/extract-zip');
 const { readJson } = require('./json_file');
 
 // paths to ignore when attempting to traverse into plugin

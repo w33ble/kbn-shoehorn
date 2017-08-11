@@ -1,5 +1,9 @@
 # kbn-shoehorn changelog
 
+## v0.3.1
+
+- Fix extract-zip dependency, use fork
+
 ## v0.3.0
 
 - Add support for installing from a local directory
