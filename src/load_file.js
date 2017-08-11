@@ -27,7 +27,7 @@ function copyPath(filePath, targetPath) {
 function unpackZip(filePath, targetPath) {
   return new Promise((resolve, reject) => {
     const { ext, name } = parse(filePath);
-    const unpackTarget = join(tempDir, name);
+    const unpackTarget = join(tempDir, name, String((new Date()).getTime())); // unique temp unzip path
 
     if (ext !== '.zip') {
       reject(`Plugin must be a .zip file, ${ext} is not supported`);
