@@ -29,10 +29,13 @@ kbn-shoehorn snuids/Elastic-5.0-Country-Map-Visualizer
 
 ### Load plugin from local path
 
-If you need to install a plugin from your machine, you can use the `-f` flag, passing it the path to the plugin. Currently only directories are supported.
+If you need to install a plugin from your machine, you can use the `-f` flag, passing it the path to the plugin. If you have a zip file, that can be used as well.
 
 ```
-kbn-shoehorn -f ~/Download/enhanced_tilemap/
+kbn-shoehorn -f ~/Downloads/kibana/enhanced_tilemap/
+
+# or from a zip file
+kbn-shoehorn -f ~/Downloads/health_metric_vis-5.5.0.zip
 ```
 
 ### Non Interactive Options
