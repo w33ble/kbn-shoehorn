@@ -25,26 +25,24 @@ const openZip = (zip, opts = {}) => new Promise((resolve, reject) => {
   });
 });
 
-const writeEntity = (zipfile, entity, fileName) => {
-  return new Promise((resolve, reject) => {
-    // write the file using the streaming output interface
-    zipfile.openReadStream(entity, (err, readStream) => {
-      if (err) {
-        reject(err);
-        return;
-      }
+const writeEntity = (zipfile, entity, fileName) => new Promise((resolve, reject) => {
+  // write the file using the streaming output interface
+  zipfile.openReadStream(entity, (err, readStream) => {
+    if (err) {
+      reject(err);
+      return;
+    }
 
-      // ensure parent directory exists
-      createPath(dirname(fileName)).then(() => {
-        // write the target file
-        readStream.pipe(createWriteStream(fileName));
+    // ensure parent directory exists
+    createPath(dirname(fileName)).then(() => {
+      // write the target file
+      readStream.pipe(createWriteStream(fileName));
 
-        // on completion, process next file in zip
-        readStream.on('end', resolve());
-      }).catch(e => reject(e));
-    });
+      // on completion, process next file in zip
+      readStream.on('end', resolve());
+    }).catch(e => reject(e));
   });
-};
+});
 
 module.exports = function extractArchive(zip, opts) {
   const targetDir = opts.dir;

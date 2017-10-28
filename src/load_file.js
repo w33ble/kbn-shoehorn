@@ -43,7 +43,6 @@ function unpackZip(filePath, targetPath) {
   const { ext, name } = parse(filePath);
   // unique temp unzip path
   const unpackTarget = join(tempDir, name, String((new Date()).getTime()));
-  console.log('unpackTarget', unpackTarget)
 
   if (ext !== '.zip') {
     return Promise.reject(`Plugin must be a .zip file, ${ext} is not supported`);
