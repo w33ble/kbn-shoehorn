@@ -2,12 +2,13 @@ const { statSync, readdirSync } = require('fs');
 const { parse, join } = require('path');
 const ncp = require('ncp').ncp;
 const tempDir = require('temp-dir');
-const extract = require('@w33ble/extract-zip');
+const extract = require('./extract');
 const { readJson } = require('./json_file');
 
 // paths to ignore when attempting to traverse into plugin
 const ignorePaths = [
   '.DS_Store',
+  '__MACOSX',
 ];
 
 function readPackageName(dirPath) {
@@ -39,41 +40,36 @@ function copyPath(filePath, targetPath) {
 }
 
 function unpackZip(filePath, targetPath) {
-  return new Promise((resolve, reject) => {
-    const { ext, name } = parse(filePath);
-    const unpackTarget = join(tempDir, name, String((new Date()).getTime())); // unique temp unzip path
+  const { ext, name } = parse(filePath);
+  // unique temp unzip path
+  const unpackTarget = join(tempDir, name, String((new Date()).getTime()));
+  console.log('unpackTarget', unpackTarget)
 
-    if (ext !== '.zip') {
-      reject(`Plugin must be a .zip file, ${ext} is not supported`);
-      return;
+  if (ext !== '.zip') {
+    return Promise.reject(`Plugin must be a .zip file, ${ext} is not supported`);
+  }
+
+  return extract(filePath, { dir: unpackTarget })
+  .then(() => {
+    // look for name in package.json, traverse if only one path is found
+    function getPluginPath(dirPath) {
+      const pluginName = readPackageName(dirPath);
+
+      if (!pluginName) {
+        const paths = readdirSync(dirPath).filter(path => ignorePaths.indexOf(path) === -1);
+        if (paths.length !== 1) throw new Error(`Plugin not found: ${filePath}`);
+
+        const deepDirPath = join(dirPath, paths[0]);
+        const stat = statSync(deepDirPath);
+        if (!stat.isDirectory()) throw new Error(`Plugin not found: ${filePath}`);
+
+        return getPluginPath(deepDirPath);
+      }
+
+      return dirPath;
     }
 
-    extract(filePath, { dir: unpackTarget }, (err) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-
-      // look for name in package.json, traverse if only one path is found
-      function getPluginPath(dirPath) {
-        const pluginName = readPackageName(dirPath);
-
-        if (!pluginName) {
-          const paths = readdirSync(dirPath).filter(path => ignorePaths.indexOf(path) === -1);
-          if (paths.length !== 1) throw new Error(`Plugin not found: ${filePath}`);
-
-          const deepDirPath = join(dirPath, paths[0]);
-          const stat = statSync(deepDirPath);
-          if (!stat.isDirectory()) throw new Error(`Plugin not found: ${filePath}`);
-
-          return getPluginPath(deepDirPath);
-        }
-
-        return dirPath;
-      }
-
-      resolve(copyPath(getPluginPath(unpackTarget), targetPath));
-    });
+    return copyPath(getPluginPath(unpackTarget), targetPath);
   });
 }
 
