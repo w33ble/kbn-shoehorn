@@ -8,6 +8,7 @@ const { readJson } = require('./json_file');
 // paths to ignore when attempting to traverse into plugin
 const ignorePaths = [
   '.DS_Store',
+  '__MACOSX',
 ];
 
 function readPackageName(dirPath) {
