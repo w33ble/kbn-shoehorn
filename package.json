@@ -24,7 +24,7 @@
   "homepage": "https://github.com/w33ble/kbn-shoehorn",
   "dependencies": {
     "download-git-repo": "^1.0.1",
-    "inquirer": "^3.2.0",
+    "inquirer": "^3.3.0",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
